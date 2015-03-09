@@ -44,7 +44,7 @@ else
 			{
 				case "like box":
 					$shortcode = "[facebook_likebox title=\"".$data["title"]."\" facebook_page_url=\"".$data["facebook_page_url"]."\" facebook_page_id=\"".$data["facebook_page_id"]."\" language=\"".$data["language"]."\" display_type=\"".$data["display_type"].
-						"\" connections=\"".$data["connections"]."\" width=\"".$data["width"]."\" height=\"".$data["height"]."\" streams=\"".$data["streams"]."\" border_color=\"".$data["border_color"]."\" show_faces_like_box=\"".$data["show_faces_like_box"].
+						"\" connections=\"".$data["connections"]."\" width=\"".$data["width"]."\" height=\"".$data["height"]."\" streams=\"".$data["streams"]."\" show_faces_like_box=\"".$data["show_faces_like_box"].
 						"\" color_scheme=\"".$data["color_scheme"]."\" header=\"".$data["header"]."\"]";
 				break;
 				case "like button":
@@ -61,7 +61,7 @@ else
 				break;
 				case "like box button":
 					$shortcode = "[facebook_likebox title=\"".$data["title"]."\" facebook_page_url=\"".$data["facebook_page_url"]."\" facebook_page_id=\"".$data["facebook_page_id"]."\" language=\"".$data["language"]."\" display_type=\"".$data["display_type"].
-						"\" connections=\"".$data["connections"]."\" width=\"".$data["width"]."\" height=\"".$data["height"]."\" streams=\"".$data["streams"]."\" border_color=\"".$data["border_color"]."\" show_faces_like_box=\"".$data["show_faces_like_box"].
+						"\" connections=\"".$data["connections"]."\" width=\"".$data["width"]."\" height=\"".$data["height"]."\" streams=\"".$data["streams"]."\" show_faces_like_box=\"".$data["show_faces_like_box"].
 						"\" button_style=\"".$data["button_style"]."\" show_faces_like_button=\"".$data["show_faces_like_button"]."\" color_scheme=\"".$data["color_scheme"].
 						"\" header=\"".$data["header"]."\" button_color_scheme=\"".$data["button_color_scheme"]."\" font=\"".$data["font"]."\"]";
 				break;
@@ -148,10 +148,18 @@ else
 		?>
 		<div id="message" class="top-right message" style="display: none;">
 			<div class="message-notification"></div>
-			<div class="message-notification ui-corner-all growl-success" >
+			<div class="message-notification ui-corner-all growl-success">
 				<div onclick="message_close();" id="close-message" class="message-close">x</div>
 				<div class="message-header"><?php _e("Success!", facebook_likebox); ?></div>
 				<div class="message-message"><?php _e("Successfully Saved!", facebook_likebox); ?></div>
+			</div>
+		</div>
+		<div id="top-error" class="top-right top-error" style="display: none;">
+			<div class="top-error-notification"></div>
+			<div class="top-error-notification ui-corner-all growl-top-error" >
+				<div onclick="error_message_close();" id="close-top-error" class="top-error-close">x</div>
+				<div class="top-error-header"><?php _e("Error!", facebook_likebox); ?></div>
+				<div class="top-error-top-error" id="error_message_div"></div>
 			</div>
 		</div>
 		<form id="ux_frm_facebook_pages" class="layout-form form_width">
@@ -160,7 +168,7 @@ else
 					<div class="widget-layout">
 						<div class="widget-layout-title">
 							<h4>
-								<?php _e("Facebook Pages",facebook_likebox); ?>
+								<?php _e("Facebook Pages", facebook_likebox); ?>
 							</h4>
 						</div>
 						<div class="widget-layout-body">
@@ -175,7 +183,7 @@ else
 								</ul>
 								<div class="framework_tab-content">
 									<div id="ux_facebook_like_boxes" class="framework_tab active">
-										<div class="widget-layout" style="margin-bottom:0px;">
+										<div class="widget-layout" style="margin-bottom: 0px;">
 											<div class="widget-layout-title">
 												<h4>
 													<?php _e("Facebook Like Box Settings", facebook_likebox); ?>
@@ -186,14 +194,16 @@ else
 													<select id="ux_ddl_bulk_action" name="ux_ddl_bulk_action" class="layout-span2">
 														<option value="bulk_action"><?php _e("Bulk Action", facebook_likebox); ?></option>
 														<option value="delete"><?php _e("Delete", facebook_likebox); ?></option>
-													</select>
+													</select> 
 													<input type="button" id="ux_btn_apply" name="ux_btn_apply" onclick="bulk_delete_likebox();" class="btn btn-success" value="<?php _e("Apply", facebook_likebox); ?>">
 												</div>
 												<div id="ux_cls_separator-doubled" class="separator-doubled"></div>
 												<table class="widefat" id="ux_facebook_likebox_settings_data" style="background-color: #fff !important;">
 													<thead>
 														<tr>
-															<th id="ux_th_selectall_likebox"><input type="checkbox" id="ux_chk_selectall_likebox" onclick="select_all_facebook_likebox();"></th>
+															<th id="ux_th_selectall_likebox">
+																<input type="checkbox" id="ux_chk_selectall_likebox" onclick="select_all_facebook_likebox();">
+															</th>
 															<th id="ux_th_facebook_id"><?php _e("Facebook ID", facebook_likebox); ?></th>
 															<th id="ux_th_facebook_page_url"><?php _e("Facebook Page URL", facebook_likebox); ?></th>
 															<th id="ux_th_shortcode"><?php _e("Short Code", facebook_likebox); ?></th>
@@ -202,21 +212,22 @@ else
 													</thead>
 													<tbody>
 														<?php
-														//$alternate = $get_facebook_data % 2 == 0 ? "alternate" : "";
+														$count = 0;
 														foreach ($get_facebook_data as $data)
 														{
+															$alternate = ($count++ % 2) == 0 ? "alternate" : "";
 															?>
-															<tr class="<?php //echo $alternate; ?>">
+															<tr class=<?php echo $alternate; ?>>
 																<td>
-																	<input type="checkbox" class="checkbox_action" id="ux_chk_select" name="facebook_likebox_data[]" value="<?php echo $data["setting_id"]; ?>" >
+																	<input type="checkbox" class="checkbox_action" id="ux_chk_select" name="delete_select_likebox[]" value="<?php echo $data["setting_id"]; ?>">
 																</td>
 																<td><?php echo isset($data["facebook_page_id"]) ? $data["facebook_page_id"] : ""; ?></td>
 																<td><?php echo isset($data["facebook_page_url"]) ? $data["facebook_page_url"] : ""; ?></td>
 																<td>
-																<?php
-																$shortcode = generate_shortcode($data);
-																echo isset($shortcode) ? $shortcode : "";
-																?>
+																	<?php
+																	$shortcode = generate_shortcode($data);
+																	echo isset($shortcode) ? $shortcode : "";
+																	?>
 																</td>
 																<td>
 																	<a href="#" onclick="delete_facebook_likebox(<?php echo $data["setting_id"]; ?>)"><?php _e("Delete", facebook_likebox); ?></a>
@@ -232,7 +243,7 @@ else
 									</div>
 									<div id="ux_add_new_facebook_like_box" class="framework_tab">
 										<div class="layout-control-group">
-											<input type="submit" id="ux_btn_top_save_changes" name="ux_btn_top_save_changes" class="btn btn-success" value="<?php _e("Save Changes", facebook_likebox); ?>" />
+											<input type="submit" id="ux_btn_top_save_changes" name="ux_btn_top_save_changes" class="btn btn-success" value="<?php _e("Save Changes", facebook_likebox); ?>"/>
 										</div>
 										<div class="separator-doubled fb_page_seperator"></div>
 										<div class="widget-layout">
@@ -246,7 +257,7 @@ else
 													<div class="layout-span12 responsive">
 														<div class="layout-control-group">
 															<label class="layout-control-label_fblb"><?php _e("Display Type", facebook_likebox); ?> : <span class="error">*</span>
-																<span class="hovertip" data-original-title ="<?php _e("Display Type", facebook_likebox) ;?>">
+																<span class="hovertip" data-original-title="<?php _e("Display Type", facebook_likebox); ?>">
 																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>"/>
 																</span>
 															</label>
@@ -258,56 +269,57 @@ else
 																</select>
 															</div>
 														</div>
-														<div class="layout-control-group display_type_button" style="display: none;">
+														<div class="layout-control-group share_btn" style="display: none;">
 															<label class="layout-control-label_fblb"><?php _e("Share Button", facebook_likebox); ?> : <span class="error">*</span>
-																<span class="hovertip" data-original-title ="<?php _e("Share Button", facebook_likebox) ;?>">
-																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>"/>
+																<span class="hovertip" data-original-title="<?php _e("Share Button", facebook_likebox); ?>">
+																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>" />
 																</span>
 															</label>
 															<div class="layout-controls rdl_facebook">
-																<input type="radio" id="ux_rdl_share_button_yes" class="share_button" name= "ux_rdl_share_button" checked="checked" value="true" onclick="share_button();" > <?php _e( "Yes", facebook_likebox ); ?>
-																<input type="radio" id="ux_rdl_share_button_no" class="share_button" name="ux_rdl_share_button" value="false" onclick="share_button();" > <?php _e( "No", facebook_likebox ); ?>
+																<input type="radio" id="ux_rdl_share_button_yes" class="share_button" name="ux_rdl_share_button" checked="checked" value="true" onclick="share_button();"> <?php _e("Yes", facebook_likebox ); ?>
+																<input type="radio" id="ux_rdl_share_button_no" class="share_button" name="ux_rdl_share_button" value="false" onclick="share_button();"> <?php _e("No", facebook_likebox ); ?>
 															</div>
 														</div>
-														<div class="layout-control-group share_class">
+														<div class="layout-control-group display_type">
 															<label class="layout-control-label_fblb"><?php _e("Title", facebook_likebox); ?> : <span class="error">*</span>
-																<span class="hovertip" data-original-title ="<?php _e("Title", facebook_likebox) ;?>">
-																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>"/>
+																<span class="hovertip" data-original-title="<?php _e("Title", facebook_likebox); ?>">
+																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>" />
 																</span>
 															</label>
 															<div class="layout-controls">
-																<input type="text" id="ux_txt_title" name="ux_txt_title" class="layout-span11" value="<?php _e("Facebook Like Box", facebook_likebox); ?>" onblur="shortCodeGenerator();" placeholder="<?php _e("Title", facebook_likebox); ?>" />
+																<input type="text" id="ux_txt_title" name="ux_txt_title" class="layout-span11" value="<?php _e("Facebook Like Box", facebook_likebox); ?>" onblur="shortCodeGenerator();" placeholder="<?php _e("Title", facebook_likebox); ?>"/>
 															</div>
 														</div>
 														<div class="layout-control-group share_class">
 															<label class="layout-control-label_fblb"><?php _e("Facebook Page Url", facebook_likebox); ?> : <span class="error">*</span>
-																<span class="hovertip" data-original-title ="<?php _e("Facebook Page Url", facebook_likebox) ;?>">
+																<span class="hovertip" data-original-title="<?php _e("Facebook Page Url", facebook_likebox); ?>">
 																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>"/>
 																</span>
 															</label>
 															<div class="layout-controls">
-																<input type="text" id="ux_txt_facebook_page_url" name="ux_txt_facebook_page_url" class="layout-span11" value="http://facebook.com/techbanker" onblur="shortCodeGenerator();" placeholder="<?php _e("Facebook Page Url", facebook_likebox); ?>" />
+																<input type="text" id="ux_txt_facebook_page_url" name="ux_txt_facebook_page_url" class="layout-span11" value="http://www.facebook.com/techbanker" onblur="shortCodeGenerator();" placeholder="<?php _e("Facebook Page Url", facebook_likebox); ?>"/>
 															</div>
 														</div>
 														<div class="layout-control-group share_class">
-															<label class="layout-control-label_fblb"><?php _e("Facebook Page ID", facebook_likebox); ?> : <span class="error">*</span>
-																<span class="hovertip" data-original-title ="<?php _e("Facebook Page ID", facebook_likebox) ;?>">
+															<label class="layout-control-label_fblb"><?php _e("Facebook Page ID", facebook_likebox); ?> :
+																<span class="hovertip" data-original-title="<?php _e("Facebook Page ID", facebook_likebox); ?>">
 																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>"/>
 																</span>
 															</label>
 															<div class="layout-controls">
-																<input type="text" id="ux_txt_facebook_page_id" name="ux_txt_facebook_page_id" class="layout-span11" value="" onblur="shortCodeGenerator();" placeholder="<?php _e("Facebook Page id", facebook_likebox); ?>" />
+																<input type="text" id="ux_txt_facebook_page_id" name="ux_txt_facebook_page_id" class="layout-span11" value="" onblur="shortCodeGenerator();" placeholder="<?php _e("Facebook Page id", facebook_likebox); ?>"/>
 															</div>
 														</div>
 														<div class="layout-control-group">
 															<label class="layout-control-label_fblb"><?php _e("Language", facebook_likebox); ?> : <span class="error">*</span>
-																<span class="hovertip" data-original-title ="<?php _e("Language", facebook_likebox) ;?>">
+																<span class="hovertip" data-original-title="<?php _e("Language", facebook_likebox); ?>">
 																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>"/>
 																</span>
 															</label>
 															<div class="layout-controls">
 																<select id="ux_ddl_language" name="ux_ddl_language" class="layout-span11" onblur="shortCodeGenerator();">
-																	<?php foreach ($language as $key => $value) 
+																	<?php
+																	foreach ($language as $key => $value) 
 																	{
 																		?>
 																		<option value=<?php echo $key; ?>><?php echo $value; ?></option>
@@ -319,7 +331,7 @@ else
 														</div>
 														<div class="layout-control-group display_type">
 															<label class="layout-control-label_fblb"><?php _e("Show Faces For Like Box", facebook_likebox); ?> : <span class="error">*</span>
-																<span class="hovertip" data-original-title ="<?php _e("Show Faces For Like Box", facebook_likebox) ;?>">
+																<span class="hovertip" data-original-title="<?php _e("Show Faces For Like Box", facebook_likebox); ?>">
 																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>"/>
 																</span>
 															</label>
@@ -332,7 +344,7 @@ else
 														</div>
 														<div class="layout-control-group display_type">
 															<label class="layout-control-label_fblb"><?php _e("Header", facebook_likebox); ?> : <span class="error">*</span>
-																<span class="hovertip" data-original-title ="<?php _e("Header", facebook_likebox) ;?>">
+																<span class="hovertip" data-original-title="<?php _e("Header", facebook_likebox); ?>">
 																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>"/>
 																</span>
 															</label>
@@ -345,7 +357,7 @@ else
 														</div>
 														<div class="layout-control-group display_type">
 															<label class="layout-control-label_fblb"><?php _e("Color Scheme", facebook_likebox); ?> : <span class="error">*</span>
-																<span class="hovertip" data-original-title ="<?php _e("Color Scheme", facebook_likebox) ;?>">
+																<span class="hovertip" data-original-title="<?php _e("Color Scheme", facebook_likebox); ?>">
 																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>"/>
 																</span>
 															</label>
@@ -358,7 +370,7 @@ else
 														</div>
 														<div class="layout-control-group display_type_button" style="display: none;">
 															<label class="layout-control-label_fblb"><?php _e("Button Style", facebook_likebox); ?> : <span class="error">*</span>
-																<span class="hovertip" data-original-title ="<?php _e("Button Style", facebook_likebox) ;?>">
+																<span class="hovertip" data-original-title="<?php _e("Button Style", facebook_likebox); ?>">
 																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>"/>
 																</span>
 															</label>
@@ -370,32 +382,19 @@ else
 																</select>
 															</div>
 														</div>
-														<div class="layout-control-group display_type_button" style="display: none;">
-															<label class="layout-control-label_fblb"><?php _e("Show Faces For Like Button", facebook_likebox); ?> : <span class="error">*</span>
-																<span class="hovertip" data-original-title ="<?php _e("Show Faces For Like Button", facebook_likebox) ;?>">
-																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>"/>
-																</span>
-															</label>
-															<div class="layout-controls">
-																<select id="ux_ddl_show_faces_like_button" name="ux_ddl_show_faces_like_button" class="layout-span11" onblur="shortCodeGenerator();">
-																	<option value="yes"><?php _e("Yes", facebook_likebox); ?></option>
-																	<option value="no"><?php _e("No", facebook_likebox); ?></option>
-																</select>
-															</div>
-														</div>
 														<div class="layout-control-group display_type">
 															<label class="layout-control-label_fblb"><?php _e("Connections", facebook_likebox); ?><span class="span-text"><?php _e( "(max. 100) ", facebook_likebox ); ?></span> : <span class="error">*</span>
-																<span class="hovertip" data-original-title ="<?php _e("Connections", facebook_likebox) ;?>">
+																<span class="hovertip" data-original-title="<?php _e("Connections", facebook_likebox) ;?>">
 																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>"/>
 																</span>
 															</label>
 															<div class="layout-controls">
-																<input type="text" id="ux_txt_connections" name="ux_txt_connections" class="layout-span11" value="6" onblur="shortCodeGenerator();" placeholder="<?php _e("Connections", facebook_likebox); ?>" />
+																<input type="text" id="ux_txt_connections" name="ux_txt_connections" class="layout-span11" value="6" onblur="shortCodeGenerator();" placeholder="<?php _e("Connections", facebook_likebox); ?>"/>
 															</div>
 														</div>
 														<div class="layout-control-group display_type_button" style="display: none;">
 															<label class="layout-control-label_fblb"><?php _e("Button Color Scheme", facebook_likebox); ?> : <span class="error">*</span>
-																<span class="hovertip" data-original-title ="<?php _e("Button Color Scheme", facebook_likebox) ;?>">
+																<span class="hovertip" data-original-title="<?php _e("Button Color Scheme", facebook_likebox); ?>">
 																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>"/>
 																</span>
 															</label>
@@ -407,28 +406,28 @@ else
 															</div>
 														</div>
 														<div class="layout-control-group display_type">
-															<label class="layout-control-label_fblb"><?php _e("Width", facebook_likebox); ?><span class="span-text"><?php _e( "(px) ", facebook_likebox ); ?></span> : <span class="error">*</span>
-																<span class="hovertip" data-original-title ="<?php _e("Width", facebook_likebox) ;?>">
-																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>"/>
+															<label class="layout-control-label_fblb"><?php _e("Width", facebook_likebox); ?><span class="span-text"><?php _e( "(px) ", facebook_likebox); ?></span> : <span class="error">*</span>
+																<span class="hovertip" data-original-title="<?php _e("Width", facebook_likebox); ?>">
+																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>" />
 																</span>
 															</label>
 															<div class="layout-controls">
-																<input type="text" id="ux_txt_width" name="ux_txt_width" class="layout-span11" value="300" onblur="shortCodeGenerator();" placeholder="<?php _e("Width", facebook_likebox); ?>" />
+																<input type="text" id="ux_txt_width" name="ux_txt_width" class="layout-span11" value="300" onblur="shortCodeGenerator();" placeholder="<?php _e("Width", facebook_likebox); ?>"/>
 															</div>
 														</div>
 														<div class="layout-control-group display_type">
-															<label class="layout-control-label_fblb"><?php _e("Height", facebook_likebox); ?><span class="span-text"><?php _e( "(px) ", facebook_likebox ); ?></span> : <span class="error">*</span>
-																<span class="hovertip" data-original-title ="<?php _e("Height", facebook_likebox) ;?>">
+															<label class="layout-control-label_fblb"><?php _e("Height", facebook_likebox); ?><span class="span-text"><?php _e( "(px) ", facebook_likebox); ?></span> : <span class="error">*</span>
+																<span class="hovertip" data-original-title="<?php _e("Height", facebook_likebox); ?>">
 																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>"/>
 																</span>
 															</label>
 															<div class="layout-controls">
-																<input type="text" id="ux_txt_height" name="ux_txt_height" class="layout-span11" value="500" onblur="shortCodeGenerator();" placeholder="<?php _e("Height", facebook_likebox); ?>" />
+																<input type="text" id="ux_txt_height" name="ux_txt_height" class="layout-span11" value="300" onblur="shortCodeGenerator();" placeholder="<?php _e("Height", facebook_likebox); ?>"/>
 															</div>
 														</div>
 														<div class="layout-control-group display_type_button" style="display: none;">
 															<label class="layout-control-label_fblb"><?php _e("Font", facebook_likebox); ?> : <span class="error">*</span>
-																<span class="hovertip" data-original-title ="<?php _e("Font", facebook_likebox) ;?>">
+																<span class="hovertip" data-original-title="<?php _e("Font", facebook_likebox); ?>">
 																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>"/>
 																</span>
 															</label>
@@ -444,22 +443,9 @@ else
 															</div>
 														</div>
 														<div class="layout-control-group display_type">
-															<label class="layout-control-label_fblb"><?php _e("Border Color", facebook_likebox); ?> : <span class="error">*</span>
-																<span class="hovertip" data-original-title ="<?php _e("Border Color", facebook_likebox) ;?>">
-																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>"/>
-																</span>
-															</label>
-															<div class="layout-controls">
-																<input type="text" id="ux_txt_border_color" name="ux_txt_border_color" class="layout-span11" onclick="ux_border_color();"
-																value="<?php echo "#31ee3f"; ?>" style="background-color: <?php echo "#31ee3f"; ?>; color:#fff;" onblur="shortCodeGenerator();" placeholder="<?php _e("Border Color", facebook_likebox); ?>" />
-																<img class="img_color" onclick="ux_border_color();" src="<?php echo plugins_url("/assets/images/color.png" , dirname(__FILE__)); ?>" />
-																<div id="ux_clr_border_color"></div>
-															</div>
-														</div>
-														<div class="layout-control-group display_type">
 															<label class="layout-control-label_fblb"><?php _e("Streams", facebook_likebox); ?> : <span class="error">*</span>
-																<span class="hovertip" data-original-title ="<?php _e("Streams", facebook_likebox) ;?>">
-																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>"/>
+																<span class="hovertip" data-original-title="<?php _e("Streams", facebook_likebox); ?>">
+																	<img class="tooltip_img" src="<?php echo FACEBOOK_LIKEBOX_TOOLTIP; ?>" />
 																</span>
 															</label>
 															<div class="layout-controls">
@@ -473,20 +459,18 @@ else
 												</div>
 											</div>
 										</div>
-										<br>
+										
 										<div class="widget-layout">
 											<div class="widget-layout-title">
 												<h4>
 													<?php _e("Short Code", facebook_likebox); ?>
 												</h4>
 											</div>
-											<div class="widget-layout-body" id="ux_shortcode">
-												
-											</div>
+											<div class="widget-layout-body" id="ux_shortcode"></div>
 										</div>
 										<div class="separator-doubled fb_page_seperator"></div>
 										<div class="layout-control-group">
-											<input type="submit" id="ux_btn_bottom_save_changes" name="ux_btn_bottom_save_changes" class="btn btn-success" value="<?php _e("Save Changes", facebook_likebox); ?>" />
+											<input type="submit" id="ux_btn_bottom_save_changes" name="ux_btn_bottom_save_changes" class="btn btn-success" value="<?php _e("Save Changes", facebook_likebox); ?>"/>
 										</div>
 									</div>
 								</div>
@@ -500,6 +484,7 @@ else
 			var facebook_likebox_checkbox_id = [];
 			jQuery(document).ready(function()
 			{
+				jQuery("#ux_ddl_language").val("en_US");
 				jQuery(".hovertip").tooltip({placement: "right"});
 				oTable_facebook_likebox = jQuery("#ux_facebook_likebox_settings_data").dataTable
 				({
@@ -534,7 +519,7 @@ else
 				jQuery(this).parent("li").addClass("active").siblings().removeClass("active");
 				e.preventDefault();
 			});
-			
+
 			if (typeof(select_all_facebook_likebox) != "function")
 			{
 				function select_all_facebook_likebox()
@@ -591,27 +576,37 @@ else
 				function change_display_type()
 				{
 					var display_type = jQuery("#ux_ddl_display_type").val();
+					var share = jQuery(".share_button").prop("checked");
 					switch(display_type)
 					{
-						case "like box":
-							jQuery(".display_type").css("display", "block");
-							jQuery(".display_type_button").css("display", "none");
-							shortCodeGenerator();
-						break;
-						case "like button":
-							jQuery(".display_type_button").css("display", "block");
-							jQuery(".display_type").css("display", "none");
-							jQuery("#ux_rdl_share_button_yes").removeAttr("disabled");
-							jQuery("#ux_rdl_share_button_no").removeAttr("disabled");
-							shortCodeGenerator();
-						break;
-						case "like box button":
-							jQuery(".display_type").css("display", "block");
-							jQuery(".display_type_button").css("display", "block");
-							jQuery("#ux_rdl_share_button_yes").attr("disabled","disabled");
-							jQuery("#ux_rdl_share_button_no").attr("disabled","disabled");
-							shortCodeGenerator();
-						break;
+					case "like box":
+						jQuery(".display_type").css("display", "block");
+						jQuery(".display_type_button").css("display", "none");
+						jQuery(".share_btn").css("display", "none");
+						jQuery(".share_class").css("display", "block");
+						shortCodeGenerator();
+					break;
+					case "like button":
+						jQuery(".display_type_button").css("display", "block");
+						jQuery(".display_type").css("display", "none");
+						jQuery(".share_btn").css("display", "block");
+						if (share == true)
+						{
+							jQuery(".share_class").css("display", "block");
+						}
+						else
+						{
+							jQuery(".share_class").css("display", "none");
+						}
+						shortCodeGenerator();
+					break;
+					case "like box button":
+						jQuery(".display_type").css("display", "block");
+						jQuery(".display_type_button").css("display", "block");
+						jQuery(".share_btn").css("display", "none");
+						jQuery(".share_class").css("display", "block");
+						shortCodeGenerator();
+					break;
 					}
 				}
 			}
@@ -620,29 +615,45 @@ else
 			{
 				function bulk_delete_likebox()
 				{
+					jQuery("#top-error").css("display", "none");
+					facebook_likebox_checkbox_id = jQuery("input[type=checkbox][name=delete_select_likebox\\[\\]]:checked").map(function() { return this.value; }).get();
 					if(jQuery("#ux_ddl_bulk_action").val() == "delete")
 					{
-						var confirm_delete = confirm("<?php _e( "Are you sure, you want to delete these all Likebox ?", facebook_likebox ); ?>");
-						if(confirm_delete == true)
+						if (facebook_likebox_checkbox_id.length > 0)
 						{
-							jQuery.post(ajaxurl,jQuery("#ux_frm_facebook_pages").serialize()+"&param=delete_all_likebox&action=delete_all_likebox_library&_wpnonce=<?php echo $delete_all_likebox;?>", function(data) 
+							if (facebook_likebox_checkbox_id.length == 1)
 							{
-								window.location.reload();
-							});
+								var confirm_delete = confirm("<?php _e("Are you sure, you want to delete this Likebox ?", facebook_likebox); ?>");
+							}
+							else
+							{
+								var confirm_delete = confirm("<?php _e("Are you sure, you want to delete these all Likebox ?", facebook_likebox); ?>");
+							}
+							
+							if(confirm_delete == true)
+							{
+								jQuery.post(ajaxurl,
+								{
+									facebook_likebox_checkbox_id : facebook_likebox_checkbox_id,
+									param: "delete_all_likebox",
+									action: "delete_all_likebox_library",
+									_wpnonce: "<?php echo $delete_all_likebox; ?>"
+								},
+								function (data)
+								{
+									window.location.reload();
+								});
+							}
+						}
+						else
+						{
+							jQuery("#message").css("display", "none");
+							jQuery("#error_message_div").html("<?php _e("Please select any one likebox to delete", facebook_likebox); ?>");
+							jQuery("#top-error").css("display", "block");
 						}
 					}
 				}
 			}
-			
-			if (typeof(ux_border_color) != "function")
-			{
-				function ux_border_color()
-				{
-					jQuery("#ux_clr_border_color").farbtastic("#ux_txt_border_color").slideDown();
-					jQuery("#ux_txt_border_color").focus();
-				}
-			}
-			jQuery("#ux_txt_border_color").blur(function(){jQuery("#ux_clr_border_color").slideUp()});
 			
 			// code for shortcode
 			if (typeof(shortCodeGenerator) != "function")
@@ -666,14 +677,13 @@ else
 					var button_color_scheme = jQuery("#ux_ddl_button_color_scheme").val();
 					var streams = jQuery("#ux_ddl_streams").val();
 					var font = jQuery("#ux_ddl_font").val();
-					var border_color = jQuery("#ux_txt_border_color").val();
 					
 					switch(display_type)
 					{
 						case "like box":
 							var shortcode = "[facebook_likebox title=\""+title+"\" facebook_page_url=\""+facebook_page_url+"\" facebook_page_id=\""+facebook_page_id+
 								"\" language=\""+language+"\" display_type=\""+display_type+"\" show_faces_like_box=\""+show_faces_like_box+"\" color_scheme=\""+color_scheme+
-								"\" connections=\""+connections+"\" width=\""+width+"\" header=\""+header+"\" height=\""+height+"\" streams=\""+streams+"\" border_color=\""+border_color+"\"]";
+								"\" connections=\""+connections+"\" width=\""+width+"\" header=\""+header+"\" height=\""+height+"\" streams=\""+streams+"\"]";
 						break;
 						case "like button":
 							if(share == "true")
@@ -690,7 +700,7 @@ else
 						case "like box button":
 							var shortcode = "[facebook_likebox title=\""+title+"\" show_faces_like_box=\""+show_faces_like_box+"\" facebook_page_url=\""+facebook_page_url+"\" facebook_page_id=\""+facebook_page_id+"\" button_style=\""+button_style+
 								"\" language=\""+language+"\" show_faces_like_button=\""+show_faces_like_button+"\" display_type=\""+display_type+"\" color_scheme=\""+color_scheme+"\" connections=\""+connections+
-								"\" width=\""+width+"\" header=\""+header+"\" height=\""+height+"\" button_color_scheme=\""+button_color_scheme+"\" streams=\""+streams+"\" font=\""+font+"\" border_color=\""+border_color+"\"]";
+								"\" width=\""+width+"\" header=\""+header+"\" height=\""+height+"\" button_color_scheme=\""+button_color_scheme+"\" streams=\""+streams+"\" font=\""+font+"\"]";
 						break;
 					}
 					jQuery("#ux_shortcode").html(shortcode);
@@ -701,10 +711,17 @@ else
 			{
 				function delete_facebook_likebox(setting_id)
 				{
-					var confirm_delete = confirm("<?php _e( "Are you sure, you want to delete this Likebox ?", facebook_likebox ); ?>");
+					var confirm_delete = confirm("<?php _e("Are you sure, you want to delete this Likebox ?", facebook_likebox); ?>");
 					if(confirm_delete == true)
 					{
-						jQuery.post(ajaxurl, "setting_id="+setting_id+"&param=single_likebox_delete&action=delete_likebox_library&_wpnonce=<?php echo $delete_likebox; ?>", function(data)
+						jQuery.post(ajaxurl,
+						{
+							setting_id: setting_id,
+							param: "single_likebox_delete",
+							action: "delete_likebox_library",
+							_wpnonce: "<?php echo $delete_likebox; ?>"
+						},
+						function (data)
 						{
 							window.location.reload();
 						});
@@ -727,7 +744,6 @@ else
 					},
 					ux_txt_facebook_page_id :
 					{
-						required:true,
 						number:true
 					},
 					ux_txt_connections :
@@ -745,10 +761,6 @@ else
 					{
 						required:true,
 						number:true
-					},
-					ux_txt_border_color :
-					{
-						required:true
 					}
 				},
 				errorPlacement: function(error, element)
@@ -783,6 +795,14 @@ else
 				function message_close()
 				{
 					jQuery("#message").css("display", "none");
+				}
+			}
+
+			if (typeof(error_message_close) != "function")
+			{
+				function error_message_close()
+				{
+					jQuery("#top-error").css("display", "none");
 				}
 			}
 		</script>

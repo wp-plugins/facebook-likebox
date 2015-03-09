@@ -89,7 +89,6 @@ else
 								$add_facebook_setting_meta["header"] = esc_attr($_REQUEST["ux_ddl_header"]);
 								$add_facebook_setting_meta["height"] = esc_attr($_REQUEST["ux_txt_height"]);
 								$add_facebook_setting_meta["streams"] = esc_attr($_REQUEST["ux_ddl_streams"]);
-								$add_facebook_setting_meta["border_color"] = esc_attr($_REQUEST["ux_txt_border_color"]);
 							break;
 							case "like button":
 								$add_facebook_setting_meta["share_button"] = esc_attr($_REQUEST["ux_rdl_share_button"]);
@@ -119,7 +118,6 @@ else
 								$add_facebook_setting_meta["show_faces_like_button"] = esc_attr($_REQUEST["ux_ddl_show_faces_like_button"]);
 								$add_facebook_setting_meta["button_style"] = esc_attr($_REQUEST["ux_ddl_button_style"]);
 								$add_facebook_setting_meta["font"] = esc_attr($_REQUEST["ux_ddl_font"]);
-								$add_facebook_setting_meta["border_color"] = esc_attr($_REQUEST["ux_txt_border_color"]);
 							break;
 						}
 						
@@ -143,17 +141,18 @@ else
 						$delete_likebox_array = array();
 						$delete_likebox_array["setting_id"] = intval($_REQUEST["setting_id"]);
 						$object_save_data->delete_data(facebook_settings_tbl(), $delete_likebox_array);
-						die();
 					}
+					die();
 				break;
 				case "delete_all_likebox":
 					if(wp_verify_nonce($_REQUEST["_wpnonce"], "delete_all_likebox"))
 					{
-						$setting_id = isset($_REQUEST["facebook_likebox_data"]) ? implode(",",$_REQUEST["facebook_likebox_data"]) : "0";
-						$object_save_data->bulk_delete(facebook_settings_meta_tbl(), "setting_id",$setting_id);
-						$object_save_data->bulk_delete(facebook_settings_tbl(), "setting_id",$setting_id);
-						die();
+						$delete_array = $_REQUEST["facebook_likebox_checkbox_id"];
+						$setting_id = isset($delete_array) ? implode(",", $delete_array) : "0";
+						$object_save_data->bulk_delete(facebook_settings_meta_tbl(), "setting_id", $setting_id);
+						$object_save_data->bulk_delete(facebook_settings_tbl(), "setting_id", $setting_id);
 					}
+					die();
 				break;
 				case "plugin_settings":
 					if(wp_verify_nonce($_REQUEST["_wpnonce"], "plugin_settings"))

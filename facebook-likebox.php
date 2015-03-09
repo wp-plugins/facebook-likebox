@@ -4,7 +4,7 @@ Plugin Name: Facebook Likebox
 Plugin URI: http://tech-banker.com
 Description: Let people share pages and content from your site back to their Facebook profile with one click, so all their friends can read them.
 Author: Tech Banker
-Version: 1.0
+Version: 1.0.1
 Author URI: http://tech-banker.com
 */
 
@@ -13,6 +13,7 @@ Author URI: http://tech-banker.com
 if (!defined("FACEBOOK_LIKEBOX_PLUGIN_DIR")) define("FACEBOOK_LIKEBOX_PLUGIN_DIR", plugin_dir_path( __FILE__ ));
 if (!defined("facebook_likebox")) define("facebook_likebox", "facebook_likebox");
 if(!defined("FACEBOOK_LIKEBOX_TOOLTIP")) define("FACEBOOK_LIKEBOX_TOOLTIP", plugins_url(plugin_basename(dirname(__FILE__))."/assets/images/questionmark_icon.png" , dirname(__FILE__)));
+if (!defined("tech_bank")) define("tech_bank", "tech-banker");
 
 /////////////////////////////////////////// Call Install Script on Plugin Activation ////////////////////////////////
 

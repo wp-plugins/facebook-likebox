@@ -2,8 +2,8 @@
 Contributors: contact-banker,Gallery-Bank
 Tags: facebook,facebook like box, like box, share, fb, likebox, facebook likebox
 Requires at least: 3.0
-Tested up to: 4.1
-Stable tag: 1.0
+Tested up to: 4.1.1
+Stable tag: 1.0.1
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -64,6 +64,12 @@ If any problem occurs, please contact us at [support@tech-banker.com](mailto:sup
 
 
 == Changelog ==
+
+= 1.0.1 =
+
+* Minor Bugs Fixed.
+* Other Services Section Added.
+* Recommendations Section Added.
 
 = 1.0 =
 

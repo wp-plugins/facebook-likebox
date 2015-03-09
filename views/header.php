@@ -42,6 +42,12 @@ else
 		<a class="nav-tab coustom-nav-tab" id="fblb_general_Settings" href="admin.php?page=fblb_general_Settings">
 			<?php _e("General Settings", facebook_likebox);?>
 		</a>
+		<a class="nav-tab coustom-nav-tab" id="fblb_recommendations" href="admin.php?page=fblb_recommendations">
+			<?php _e("Recommendations", facebook_likebox);?>
+		</a>
+		<a class="nav-tab coustom-nav-tab" id="fblb_our_other_services" href="admin.php?page=fblb_our_other_services">
+			<?php _e("Our Other Services", facebook_likebox);?>
+		</a>
 	</h2>
 	<script>
 		jQuery(document).ready(function()

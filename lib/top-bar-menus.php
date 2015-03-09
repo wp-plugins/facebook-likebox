@@ -32,5 +32,17 @@ else
 		"href" => site_url()."/wp-admin/admin.php?page=fblb_general_Settings",
 		"title" => __("General Settings",facebook_likebox))									/* set the sub-menu name */
 	);
+	$wp_admin_bar->add_menu(array(
+		"parent" => "facebook_likebox",
+		"id" => "recommendations",
+		"href" => site_url()."/wp-admin/admin.php?page=fblb_recommendations",
+		"title" => __("Recommendations", facebook_likebox))									/* set the sub-menu name */
+	);
+	$wp_admin_bar->add_menu(array(
+		"parent" => "facebook_likebox",
+		"id" => "our_other_services",
+		"href" => site_url()."/wp-admin/admin.php?page=fblb_our_other_services",
+		"title" => __("Our Other Services", facebook_likebox))								/* set the sub-menu name */
+	);
 }
 ?>
