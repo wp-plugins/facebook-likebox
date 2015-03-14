@@ -4,7 +4,7 @@ Plugin Name: Facebook Likebox
 Plugin URI: http://tech-banker.com
 Description: Let people share pages and content from your site back to their Facebook profile with one click, so all their friends can read them.
 Author: Tech Banker
-Version: 1.0.1
+Version: 1.0.2
 Author URI: http://tech-banker.com
 */
 
@@ -178,58 +178,65 @@ if(!function_exists("add_facebook_likebox_admin_bar"))
 	function add_facebook_likebox_admin_bar($meta = TRUE)
 	{
 		global $wp_admin_bar, $wpdb,$current_user;
-		if(is_super_admin())
+		if (!is_user_logged_in())
 		{
-			$fblb_role = "administrator";
+			return;
 		}
 		else
 		{
-			$fblb_role = $wpdb->prefix . "capabilities";
-			$current_user->role = array_keys($current_user->$fblb_role);
-			$fblb_role = $current_user->role[0];
-		}
-		$setting_data = $wpdb->get_var
-		(
-			$wpdb->prepare
-			(
-				"SELECT meta_value FROM ".facebook_settings_meta_tbl()." WHERE meta_key=%s",
-				"top_bar_menu"
-			)
-		);
-		if($setting_data == "1")
-		{
-			switch($fblb_role)
+			if(is_super_admin())
 			{
-				case "administrator":
-					if(file_exists(FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/top-bar-menus.php"))
-					{
-						include_once FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/top-bar-menus.php";
-					}
-				break;
-				case "editor":
-					if(file_exists(FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/top-bar-menus.php"))
-					{
-						include_once FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/top-bar-menus.php";
-					}
-				break;
-				case "author":
-					if(file_exists(FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/top-bar-menus.php"))
-					{
-						include_once FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/top-bar-menus.php";
-					}
-				break;
-				case "contributor":
-					if(file_exists(FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/top-bar-menus.php"))
-					{
-						include_once FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/top-bar-menus.php";
-					}
-				break;
-				case "subscriber":
-					if(file_exists(FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/top-bar-menus.php"))
-					{
-						include_once FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/top-bar-menus.php";
-					}
-				break;
+				$fblb_role = "administrator";
+			}
+			else
+			{
+				$fblb_role = $wpdb->prefix . "capabilities";
+				$current_user->role = array_keys($current_user->$fblb_role);
+				$fblb_role = $current_user->role[0];
+			}
+			$setting_data = $wpdb->get_var
+			(
+				$wpdb->prepare
+				(
+					"SELECT meta_value FROM ".facebook_settings_meta_tbl()." WHERE meta_key=%s",
+					"top_bar_menu"
+				)
+			);
+			if($setting_data == "1")
+			{
+				switch($fblb_role)
+				{
+					case "administrator":
+						if(file_exists(FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/top-bar-menus.php"))
+						{
+							include_once FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/top-bar-menus.php";
+						}
+					break;
+					case "editor":
+						if(file_exists(FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/top-bar-menus.php"))
+						{
+							include_once FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/top-bar-menus.php";
+						}
+					break;
+					case "author":
+						if(file_exists(FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/top-bar-menus.php"))
+						{
+							include_once FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/top-bar-menus.php";
+						}
+					break;
+					case "contributor":
+						if(file_exists(FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/top-bar-menus.php"))
+						{
+							include_once FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/top-bar-menus.php";
+						}
+					break;
+					case "subscriber":
+						if(file_exists(FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/top-bar-menus.php"))
+						{
+							include_once FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/top-bar-menus.php";
+						}
+					break;
+				}
 			}
 		}
 	}
@@ -445,7 +452,42 @@ class Facebook_Likebox_Widget extends WP_Widget
 	}
 }
 
-add_action( "widgets_init", create_function("", "return register_widget(\"Facebook_Likebox_Widget\");") );
+add_action( "widgets_init", create_function("", "return register_widget(\"Facebook_Likebox_Widget\");"));
+
+$is_option_auto_update = get_option("facebook-like-automatic_update");
+
+if($is_option_auto_update == "" || $is_option_auto_update == "1")
+{
+	if (!wp_next_scheduled("facebook_likebox_auto_update"))
+	{
+		wp_schedule_event(time(), "daily", "facebook_likebox_auto_update");
+	}
+	add_action("facebook_likebox_auto_update", "facebook_plugin_autoUpdate");
+}
+else
+{
+	wp_clear_scheduled_hook("facebook_likebox_auto_update");
+}
+function facebook_plugin_autoUpdate()
+{
+	try
+	{
+		require_once(ABSPATH . "wp-admin/includes/class-wp-upgrader.php");
+		require_once(ABSPATH . "wp-admin/includes/misc.php");
+		define("FS_METHOD", "direct");
+		require_once(ABSPATH . "wp-includes/update.php");
+		require_once(ABSPATH . "wp-admin/includes/file.php");
+		wp_update_plugins();
+		ob_start();
+		$plugin_upgrader = new Plugin_Upgrader();
+		$plugin_upgrader->upgrade("facebook-likebox/facebook-likebox.php");
+		$output = @ob_get_contents();
+		@ob_end_clean();
+	}
+	catch(Exception $e)
+	{
+	}
+}
 
 ////////////////////////////////////////////// Calling Hooks ///////////////////////////////////////////////////
 

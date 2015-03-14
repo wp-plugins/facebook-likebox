@@ -102,5 +102,6 @@ switch ($version)
 		$insert_data->insert(facebook_settings_licensing_tbl(), $licensing_data);
 	break;
 }
+update_option("facebook-like-automatic_update",1);
 update_option("facebook-likebox-version-number","1.0");
 ?>

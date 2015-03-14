@@ -39,6 +39,9 @@ else
 		<a class="nav-tab coustom-nav-tab" id="facebook_likebox" href="admin.php?page=facebook_likebox">
 			<?php _e("Facebook Pages", facebook_likebox);?>
 		</a>
+		<a class="nav-tab coustom-nav-tab" id="fblb_plugin_update" href="admin.php?page=facebook_plugin_update">
+			<?php _e("Plugin Updates", facebook_likebox);?>
+		</a>
 		<a class="nav-tab coustom-nav-tab" id="fblb_general_Settings" href="admin.php?page=fblb_general_Settings">
 			<?php _e("General Settings", facebook_likebox);?>
 		</a>

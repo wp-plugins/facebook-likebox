@@ -179,6 +179,11 @@ else
 						die();
 					}
 				break;
+				case "facebook_plugin_updates":
+					$facebook_updates = intval($_REQUEST["facebook_updates"]);
+					update_option("facebook-like-automatic_update",$facebook_updates);
+					die();
+				break;
 			}
 		}
 	}
