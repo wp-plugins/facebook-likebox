@@ -4,7 +4,7 @@ Plugin Name: Facebook Likebox
 Plugin URI: http://tech-banker.com
 Description: Let people share pages and content from your site back to their Facebook profile with one click, so all their friends can read them.
 Author: Tech Banker
-Version: 1.0.2
+Version: 1.0.3
 Author URI: http://tech-banker.com
 */
 
@@ -427,12 +427,12 @@ class Facebook_Likebox_Widget extends WP_Widget
 			break;
 			case "like button":
 				?>
-				<div class="fb-like" data-send="true" data-href="<?php echo $facebook_page_url; ?>" data-layout="<?php echo $button_style; ?>" data-colorscheme="<?php echo $button_color_scheme; ?>" font="<?php echo $font; ?>" data-action="like" data-share="true" style="margin-bottom: 15px;" data-show-faces="<?php echo $show_faces_like_button; ?>" ></div>
+				<div class="fb-like" data-send="true" data-href="<?php echo $facebook_page_url; ?>" data-layout="<?php echo $button_style; ?>" data-colorscheme="<?php echo $button_color_scheme; ?>" style="font:<?php echo $font; ?>" data-action="like" data-share="true" style="margin-bottom: 15px;" data-show-faces="<?php echo $show_faces_like_button; ?>" ></div>
 				<?php
 			break;
 			case "like box button":
 				?>
-				<div class="fb-like" data-send="true" data-href="<?php echo $facebook_page_url; ?>" data-layout="<?php echo $button_style; ?>" data-colorscheme="<?php echo $button_color_scheme; ?>" font="<?php echo $font; ?>" data-action="like" data-share="true" style="margin-bottom: 15px;" data-show-faces="<?php echo $show_faces_like_button; ?>" ></div>
+				<div class="fb-like" data-send="true" data-href="<?php echo $facebook_page_url; ?>" data-layout="<?php echo $button_style; ?>" data-colorscheme="<?php echo $button_color_scheme; ?>" style="font:<?php echo $font; ?>" data-action="like" data-share="true" style="margin-bottom: 15px;" data-show-faces="<?php echo $show_faces_like_button; ?>" ></div>
 				<?php
 				$result = "<div id=fb-root></div>
 					<script>(function(d, s, id){

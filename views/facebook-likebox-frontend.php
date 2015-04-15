@@ -49,12 +49,12 @@ switch ($display_type)
 	break;
 	case "like button":
 		?>
-		<div class="fb-like" data-send="true" data-href="<?php echo $facebook_page_url; ?>" data-layout="<?php echo $button_style; ?>" data-colorscheme="<?php echo $button_color_scheme; ?>" data-show-faces="<?php echo $show_faces_like_button; ?>" font="<?php echo $font; ?>" data-action="like" data-share="<?php echo $share_button; ?>" style="margin-bottom: 15px;"></div>
+		<div class="fb-like" data-send="true" data-href="<?php echo $facebook_page_url; ?>" data-layout="<?php echo $button_style; ?>" data-colorscheme="<?php echo $button_color_scheme; ?>" data-show-faces="<?php echo $show_faces_like_button; ?>" style="font:<?php echo $font; ?>" data-action="like" data-share="<?php echo $share_button; ?>" style="margin-bottom: 15px;"></div>
 		<?php
 	break;
 	case "like box button":
 		?>
-		<div class="fb-like" data-send="true" data-href="<?php echo $facebook_page_url; ?>" data-colorscheme="<?php echo $button_color_scheme; ?>" data-layout="<?php echo $button_style; ?>" data-show-faces="<?php echo $show_faces_like_button; ?>" font="<?php echo $font; ?>" data-action="like" data-share="<?php echo $share_button; ?>" style="margin-bottom: 15px;"></div>
+		<div class="fb-like" data-send="true" data-href="<?php echo $facebook_page_url; ?>" data-colorscheme="<?php echo $button_color_scheme; ?>" data-layout="<?php echo $button_style; ?>" data-show-faces="<?php echo $show_faces_like_button; ?>" style="font:<?php echo $font; ?>" data-action="like" data-share="<?php echo $share_button; ?>" style="margin-bottom: 15px;"></div>
 		<?php
 		$result = "<div id=fb-root></div>
 			<script>(function(d, s, id){
