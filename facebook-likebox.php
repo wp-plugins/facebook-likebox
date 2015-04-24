@@ -4,8 +4,9 @@ Plugin Name: Facebook Likebox
 Plugin URI: http://tech-banker.com
 Description: Let people share pages and content from your site back to their Facebook profile with one click, so all their friends can read them.
 Author: Tech Banker
-Version: 1.0.3
+Version: 1.0.4
 Author URI: http://tech-banker.com
+License: GPLv3 or later
 */
 
 //////////////////////////////////////////// Define Facebook Likebox Constants //////////////////////////////////////
@@ -249,23 +250,30 @@ if(!function_exists("facebook_likebox_actions"))
 	function facebook_likebox_actions()
 	{
 		global $wpdb, $current_user, $user_role_permission;
-		if(is_super_admin())
-		{
-			$fblb_role = "administrator";
-		}
-		else
-		{
-			$fblb_role = $wpdb->prefix . "capabilities";
-			$current_user->role = array_keys($current_user->$fblb_role);
-			$fblb_role = $current_user->role[0];
-		}
-		if(isset($_REQUEST["action"]))
-		{
-			if(file_exists(FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/facebook-likebox-class.php"))
-			{
-				include_once FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/facebook-likebox-class.php";
-			}
-		}
+        if (!is_user_logged_in())
+        {
+            return;
+        }
+        else
+        {
+            if(is_super_admin())
+            {
+                $fblb_role = "administrator";
+            }
+            else
+            {
+                $fblb_role = $wpdb->prefix . "capabilities";
+                $current_user->role = array_keys($current_user->$fblb_role);
+                $fblb_role = $current_user->role[0];
+            }
+            if(isset($_REQUEST["action"]))
+            {
+                if(file_exists(FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/facebook-likebox-class.php"))
+                {
+                    include_once FACEBOOK_LIKEBOX_PLUGIN_DIR."/lib/facebook-likebox-class.php";
+                }
+            }
+        }
 	}
 }
 
