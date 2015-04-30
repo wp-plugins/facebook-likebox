@@ -4,7 +4,7 @@ Plugin Name: Facebook Likebox
 Plugin URI: http://tech-banker.com
 Description: Let people share pages and content from your site back to their Facebook profile with one click, so all their friends can read them.
 Author: Tech Banker
-Version: 1.0.4
+Version: 1.0.5
 Author URI: http://tech-banker.com
 License: GPLv3 or later
 */
