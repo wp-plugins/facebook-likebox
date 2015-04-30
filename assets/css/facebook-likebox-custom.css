@@ -1,0 +1,192 @@
+@CHARSET "ISO-8859-1";
+.fblb-label-system-status
+{
+	margin-top: 8px;
+}
+.form_width
+{
+	width: 1000px;
+}
+.layout-control-label_fblb
+{
+	float: left;
+	width: 200px;
+	padding-top: 8px;
+	text-align: left;
+	margin-bottom: 3px;
+}
+.rdl_facebook
+{
+	margin-top:9px;
+}
+
+.span-text
+{
+	text-align:center;
+	margin-left:5px;
+	margin-right:5px;
+	font-size:10px;
+	font-style: italic;
+}
+#ux_th_selectall_likebox
+{
+	width: 40px;
+}
+#ux_th_facebook_id
+{
+	width: 128px;
+}
+#ux_th_facebook_page_url
+{
+	width: 235px;
+}
+#ux_th_shortcode
+{
+	width: 390px;
+}
+#ux_th_action
+{
+	width: 55px;
+}
+.check-bottom
+{
+	margin-bottom: 5px;
+	display: block;
+}
+.custom-layout-controls-facebook
+{
+	margin-top: 10px;
+	margin-left: 230px !important;
+}
+.fb-layout-controls-label 
+{
+	vertical-align: top;
+}
+#ux_chk_selectall_likebox
+{
+	margin-top: 6px;
+}
+#ux_chk_select
+{
+	margin-left: 7px;
+}
+#ux_cls_separator-doubled
+{
+	margin-bottom: 9px;
+}
+.fb_page_seperator
+{
+	padding: 6px ;
+}
+#ux_rdl_share_button_no
+{
+	margin-left:10px;
+}
+#ux_btn_general_settings_save
+{
+	float:right;
+	margin-top: 12px;
+}
+#ux_btn_top_save_changes
+{
+	float: right;
+}
+#ux_btn_bottom_save_changes
+{
+	float: right;
+}
+#ux_rdl_enable_menu_disabled
+{
+	margin-left:10px;
+}
+/******************************TOOLTIP****************************************/
+
+.tooltip 
+{
+	position: absolute;
+	z-index: 10300;
+	display: block;
+	visibility: visible;
+	padding: 5px;
+	font-size: 11px;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+.tooltip.in 
+{
+	opacity: 0.8;
+	filter: alpha(opacity=80);
+}
+.tooltip.top
+{
+	margin-top: -3px;
+}
+.tooltip.right 
+{
+	margin-left: 3px;
+}
+.tooltip.bottom 
+{
+	margin-top: 3px;
+}
+.tooltip.left 
+{
+	margin-left: -3px;
+}
+.tooltip-inner 
+{
+	max-width: 200px;
+	padding: 3px 8px;
+	color: #ffffff;
+	text-align: center;
+	text-decoration: none;
+	background-color: #202020;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+.tooltip-arrow 
+{
+	position: absolute;
+	width: 0;
+	height: 0;
+	border-color: transparent;
+	border-style: solid;
+}
+.tooltip.top .tooltip-arrow 
+{
+	bottom: 0;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px 5px 0;
+	border-top-color: #000000;
+}
+.tooltip.right .tooltip-arrow
+{
+	top: 50%;
+	left: 0;
+	margin-top: -5px;
+	border-width: 5px 5px 5px 0;
+	border-right-color: #000000;
+}
+.tooltip.left .tooltip-arrow 
+{
+	top: 50%;
+	right: 0;
+	margin-top: -5px;
+	border-width: 5px 0 5px 5px;
+	border-left-color: #000000;
+}
+.tooltip.bottom .tooltip-arrow 
+{
+	top: 0;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 0 5px 5px;
+	border-bottom-color: #000000;
+}
+.tooltip_img
+{
+	vertical-align:middle;
+	width:15px !important;
+}
