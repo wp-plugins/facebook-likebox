@@ -13,7 +13,7 @@ Let people share pages and content from your site back to their Facebook profile
 
 Let people share pages and content from your site back to their Facebook profile with one click, so all their friends can read them.
 
-Facebook likebox is important part of social optimization, that's why a lot of people use Facebook like box on their websites. 
+Facebook Likebox is important part of social optimization, that's why a lot of people use Facebook like box on their websites. 
 
 
 = Features =
