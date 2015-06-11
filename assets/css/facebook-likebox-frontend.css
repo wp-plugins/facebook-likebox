@@ -1,0 +1,21 @@
+.widget_heading
+{
+	text-align:left;
+	margin-top: 7px;
+	margin-bottom: 5px;
+}
+.frontend-label
+{
+	float: left;
+	width: 150px;
+	padding-top: 8px;
+	text-align: left;
+}
+.controls_style
+{
+	width: 180px;
+}
+.frontend-control-group
+{
+	margin-bottom: 10px;
+}
